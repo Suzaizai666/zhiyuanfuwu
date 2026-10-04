@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>空巢守望 · 志愿匹配系统</title>
+<meta name="description" content="空巢守望·志愿匹配系统：连接社区空巢老人与青年志愿者的网页端志愿服务匹配平台，以匹配引擎与组织工具提升社区志愿服务体系效率。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231B3A5C'/%3E%3Cpath d='M8 20c2.5-5.5 6-8 8-8s5.5 2.5 8 8' stroke='%23F2A65A' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='11' r='2.6' fill='%23F2A65A'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --ink:#1B3A5C;
+  --ink-deep:#12293F;
+  --orange:#E8612C;
+  --gold:#F2A65A;
+  --cream:#FAF5EE;
+  --line:#E4DACB;
+  --text:#26313B;
+  --text-2:#5E6A75;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans SC",system-ui,-apple-system,"Microsoft YaHei",sans-serif;
+  color:var(--text);background:var(--cream);line-height:1.7;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.serif{font-family:"Noto Serif SC",serif}
+a{color:inherit;text-decoration:none}
+
+/* ===== 顶部导航 ===== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(250,245,238,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font-family:"Noto Serif SC",serif;font-weight:700;font-size:19px;color:var(--ink)}
+.brand svg{flex:none}
+.nav{display:flex;gap:26px;margin-left:auto;font-size:14.5px;font-weight:500;color:var(--text-2)}
+.nav a{padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.nav a:hover{color:var(--orange);border-color:var(--orange)}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+  font-family:inherit;font-size:15px;font-weight:700;border-radius:999px;
+  padding:12px 26px;transition:transform .15s,box-shadow .2s,background .2s;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 8px 22px rgba(232,97,44,.32)}
+.btn-primary:hover{background:#D55422}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55)}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.10)}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;width:42px;height:42px;border-radius:10px;align-items:center;justify-content:center}
+.menu-btn span,.menu-btn span::before,.menu-btn span::after{content:"";display:block;width:22px;height:2.4px;background:var(--ink);border-radius:2px;position:relative;transition:transform .25s}
+.menu-btn span::before{position:absolute;top:-7px}
+.menu-btn span::after{position:absolute;top:7px}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#132B44 0%,#1B3A5C 55%,#24507A 100%);
+  color:#fff;min-height:100vh;display:flex;align-items:center;padding:130px 0 90px;
+}
+.hero-bg{position:absolute;inset:0;opacity:.34;background:url("assets/hero-network.jpg") center/cover no-repeat}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(19,43,68,.9) 16%,rgba(19,43,68,.45) 60%,rgba(19,43,68,.3))}
+.hero-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 24px;width:100%}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;letter-spacing:.12em;
+  color:var(--gold);border:1px solid rgba(242,166,90,.45);border-radius:999px;padding:6px 16px;margin-bottom:26px;
+}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.hero h1{font-size:clamp(40px,6vw,68px);font-weight:900;line-height:1.16;letter-spacing:.01em}
+.hero h1 .hl{color:var(--gold)}
+.hero .sub{font-size:clamp(16px,2vw,20px);font-weight:300;color:rgba(255,255,255,.88);max-width:640px;margin:22px 0 34px;line-height:1.8}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:0;margin-top:52px;flex-wrap:wrap}
+.hstat{padding:0 36px;border-left:1px solid rgba(255,255,255,.18)}
+.hstat:first-child{border-left:none;padding-left:0}
+.hstat .num{font-family:"Noto Serif SC",serif;font-size:clamp(28px,3.6vw,42px);font-weight:900;color:#fff}
+.hstat .num em{font-style:normal;font-size:.55em;color:var(--gold)}
+.hstat .lbl{font-size:13.5px;color:rgba(255,255,255,.68);margin-top:4px}
+.hero-note{margin-top:26px;font-size:13px;color:rgba(255,255,255,.55)}
+
+/* ===== 页脚 ===== */
+footer{background:#0F2233;color:rgba(255,255,255,.55);padding:26px 0;font-size:13px}
+.footer-inner{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.footer-inner .b{display:flex;align-items:center;gap:10px;color:#fff;font-family:"Noto Serif SC",serif;font-weight:700;font-size:15px}
+
+/* ===== 响应式 ===== */
+@media (max-width:720px){
+  .nav{
+    display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);
+    flex-direction:column;gap:0;padding:10px 24px 18px;border-bottom:1px solid var(--line);
+    box-shadow:0 18px 34px rgba(27,58,92,.12);
+  }
+  .nav.open{display:flex}
+  .nav a{padding:13px 0;border-bottom:1px dashed var(--line);font-size:15px}
+  .nav a:last-child{border-bottom:none}
+  .top-cta{display:none}
+  .menu-btn{display:inline-flex}
+  .hero{padding:120px 0 80px;min-height:calc(100vh - 60px)}
+  .hstat{padding:0 20px}
+  .hero-stats{gap:22px 0}
+  .hstat:nth-child(2){border-left:none;padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="空巢守望首页">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#E8612C"/>
+        <path d="M8 20.5c2.4-5.2 5.7-7.6 8-7.6s5.6 2.4 8 7.6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="16" cy="11.5" r="2.5" fill="#fff"/>
+      </svg>
+      <span>空巢守望</span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="detail.html#data">老龄化现状</a>
+      <a href="detail.html#pain">信息壁垒</a>
+      <a href="detail.html#role">平台定位</a>
+      <a href="detail.html#features">核心功能</a>
+      <a href="detail.html#flow">匹配流程</a>
+      <a href="detail.html#scenes">服务场景</a>
+    </nav>
+    <a class="btn btn-primary top-cta" href="register.html">成为志愿者</a>
+    <button class="menu-btn" id="menuBtn" aria-label="打开菜单"><span></span></button>
+  </div>
+</header>
+
+<main>
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="hero-bg" role="presentation"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">社区互助养老 · 陪伴精准对接</span>
+    <h1>空巢守望<br><span class="hl">志愿匹配系统</span></h1>
+    <p class="sub">一个连接空巢老人与青年志愿者的网页端志愿服务平台。消除双方之间的信息壁垒，让社区里每一份陪伴的意愿，都能被精准送达有需要的老人身边。</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="detail.html">了解平台定位</a>
+      <a class="btn btn-ghost" href="register.html">申请入驻社区</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="num">3.23<em>亿</em></div><div class="lbl">60岁及以上老年人口（占总人口23%）</div></div>
+      <div class="hstat"><div class="num">1.8<em>亿</em></div><div class="lbl">空巢老人总量（占比59.7%）</div></div>
+      <div class="hstat"><div class="num">3800<em>万</em></div><div class="lbl">完全独居老人</div></div>
+    </div>
+    <p class="hero-note">数据来源：国家统计局（截至2025年底）</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="b">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#E8612C"/>
+        <path d="M8 20.5c2.4-5.2 5.7-7.6 8-7.6s5.6 2.4 8 7.6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="16" cy="11.5" r="2.5" fill="#fff"/>
+      </svg>
+      <span>空巢守望 · 志愿匹配系统</span>
+    </div>
+    <p>数据来源：国家统计局（截至2025年底）、国家卫健委调查</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var menuBtn = document.getElementById("menuBtn");
+  var nav = document.getElementById("nav");
+  menuBtn.addEventListener("click", function(){
+    nav.classList.toggle("open");
+    menuBtn.setAttribute("aria-label", nav.classList.contains("open") ? "关闭菜单" : "打开菜单");
+  });
+  var links = nav.querySelectorAll("a");
+  for (var i = 0; i < links.length; i++){
+    links[i].addEventListener("click", function(){ nav.classList.remove("open"); });
+  }
+})();
+</script>
+</body>
+</html>

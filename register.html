@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>注册入驻 · 空巢守望志愿匹配系统</title>
+<meta name="description" content="空巢守望·志愿匹配系统注册页：青年志愿者注册或社区入驻申请，加入空巢助老志愿服务。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231B3A5C'/%3E%3Cpath d='M8 20c2.5-5.5 6-8 8-8s5.5 2.5 8 8' stroke='%23F2A65A' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='11' r='2.6' fill='%23F2A65A'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --ink:#1B3A5C;
+  --ink-deep:#12293F;
+  --orange:#E8612C;
+  --orange-soft:#F7E7DB;
+  --gold:#F2A65A;
+  --cream:#FAF5EE;
+  --cream-2:#F3EBDF;
+  --text:#26313B;
+  --text-2:#5E6A75;
+  --line:#E4DACB;
+  --shadow:0 14px 40px rgba(27,58,92,.10);
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans SC",system-ui,-apple-system,"Microsoft YaHei",sans-serif;
+  color:var(--text);background:var(--cream);line-height:1.7;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+h1,h2,h3,.serif{font-family:"Noto Serif SC",serif}
+a{color:inherit;text-decoration:none}
+
+/* ===== 按钮 ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+  font-family:inherit;font-size:15px;font-weight:700;border-radius:999px;
+  padding:12px 26px;transition:transform .15s,box-shadow .2s,background .2s;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 8px 22px rgba(232,97,44,.32)}
+.btn-primary:hover{background:#D55422}
+.btn-dark{background:var(--ink);color:#fff;box-shadow:0 8px 22px rgba(27,58,92,.25)}
+.btn-dark:hover{background:var(--ink-deep)}
+
+/* ===== 顶部导航 ===== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(250,245,238,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font-family:"Noto Serif SC",serif;font-weight:700;font-size:19px;color:var(--ink)}
+.brand svg{flex:none}
+.topbar .right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.topbar .back-home{font-size:14px;color:var(--text-2);font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.topbar .back-home:hover{color:var(--orange)}
+
+/* ===== 注册横幅 ===== */
+.rg-banner{
+  position:relative;overflow:hidden;color:#fff;text-align:center;padding:130px 0 64px;
+  background:linear-gradient(135deg,#132B44 0%,#1B3A5C 55%,#24507A 100%);
+}
+.rg-banner-bg{position:absolute;inset:0;opacity:.28;background:url("assets/hero-network.jpg") center/cover no-repeat}
+.rg-banner-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,43,68,.55),rgba(19,43,68,.78))}
+.rg-banner-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;letter-spacing:.12em;
+  color:var(--gold);border:1px solid rgba(242,166,90,.45);border-radius:999px;padding:6px 16px;margin-bottom:22px;
+}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.rg-banner h1{font-size:clamp(30px,4.4vw,48px);font-weight:900;margin-bottom:14px}
+.rg-banner p{font-size:15.5px;color:rgba(255,255,255,.78);max-width:620px;margin:0 auto}
+
+/* ===== 注册卡片 ===== */
+.rg-wrap{max-width:820px;margin:-34px auto 0;padding:0 24px 40px;position:relative;z-index:5}
+.rg-card{
+  background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.rg-tabs{display:flex;border-bottom:1px solid var(--line);background:var(--cream)}
+.rg-tab{
+  flex:1;padding:18px 16px;font-family:"Noto Serif SC",serif;font-size:17px;font-weight:700;
+  color:var(--text-2);background:none;border:none;cursor:pointer;position:relative;transition:color .2s;
+}
+.rg-tab.active{color:var(--ink)}
+.rg-tab.active::after{content:"";position:absolute;left:20%;right:20%;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--orange)}
+.rg-tab:hover{color:var(--ink)}
+.rg-body{padding:36px 40px 40px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 22px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1 / -1}
+.field label{font-size:13.5px;font-weight:700;color:var(--text)}
+.field label .req{color:var(--orange);margin-left:2px}
+.field input[type="text"],.field input[type="tel"],.field select{
+  width:100%;font-family:inherit;font-size:15px;color:var(--text);
+  background:#FBF8F2;border:1.5px solid var(--line);border-radius:12px;
+  padding:12px 16px;outline:none;transition:border-color .2s,background .2s;
+}
+.field input:focus,.field select:focus{border-color:var(--orange);background:#fff}
+.field .hint{font-size:12px;color:#98A1AA}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235E6A75' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.field .err{display:none;font-size:12px;color:#D0432C}
+.field.invalid input,.field.invalid select{border-color:#D0432C}
+.field.invalid .err{display:block}
+
+/* 技能选择 */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  border:1.5px solid var(--line);background:#FBF8F2;border-radius:999px;
+  padding:8px 18px;font-size:13.5px;color:var(--text-2);cursor:pointer;user-select:none;
+  transition:all .18s;font-family:inherit;
+}
+.chip input{display:none}
+.chip:has(input:checked){background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}
+
+/* 承诺 */
+.agree{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text-2)}
+.agree input{width:17px;height:17px;margin-top:2px;accent-color:var(--orange);flex:none;cursor:pointer}
+.agree .err-msg{display:none;color:#D0432C}
+.agree.invalid .err-msg{display:inline}
+
+.submit-btn{
+  width:100%;margin-top:8px;padding:15px;font-size:16px;
+}
+.success{
+  display:none;text-align:center;padding:34px 10px 26px;
+}
+.success .ok{
+  width:76px;height:76px;border-radius:50%;margin:0 auto 22px;
+  background:#E7F0E8;color:#3D7A4A;display:flex;align-items:center;justify-content:center;
+}
+.success h3{font-size:24px;color:var(--ink);margin-bottom:10px}
+.success p{font-size:14.5px;color:var(--text-2);max-width:480px;margin:0 auto 28px;line-height:1.8}
+.success .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* 侧栏说明 */
+.rg-aside{max-width:820px;margin:0 auto;padding:0 24px 70px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rg-aside .item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 20px;box-shadow:var(--shadow)}
+.rg-aside .item .ic{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;background:var(--orange-soft);color:var(--orange)}
+.rg-aside .item h3{font-size:15.5px;color:var(--ink);margin-bottom:6px}
+.rg-aside .item p{font-size:12.5px;color:var(--text-2);line-height:1.7}
+
+footer{background:#0F2233;color:rgba(255,255,255,.55);padding:26px 0;font-size:13px;margin-top:auto}
+.footer-inner{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.footer-inner .b{display:flex;align-items:center;gap:10px;color:#fff;font-family:"Noto Serif SC",serif;font-weight:700;font-size:15px}
+
+/* ===== 响应式 ===== */
+@media (max-width:720px){
+  .rg-body{padding:26px 22px 30px}
+  .form-grid{grid-template-columns:1fr}
+  .rg-aside{grid-template-columns:1fr;padding-bottom:50px}
+  .rg-wrap{margin-top:-26px;padding:0 16px 34px}
+  .rg-banner{padding:112px 0 52px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="返回空巢守望首页">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#E8612C"/>
+        <path d="M8 20.5c2.4-5.2 5.7-7.6 8-7.6s5.6 2.4 8 7.6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="16" cy="11.5" r="2.5" fill="#fff"/>
+      </svg>
+      <span>空巢守望</span>
+    </a>
+    <div class="right">
+      <a class="back-home" href="index.html">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        返回首页
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 注册横幅 ===== -->
+<section class="rg-banner">
+  <div class="rg-banner-bg" role="presentation"></div>
+  <div class="rg-banner-inner">
+    <span class="eyebrow">加入空巢守望</span>
+    <h1>让善意有处安放，让陪伴抵达身边</h1>
+    <p>选择你的身份完成注册：青年志愿者加入陪伴队伍，或由社区负责人申请入驻平台，共同提升社区助老服务效率。</p>
+  </div>
+</section>
+
+<!-- ===== 注册卡片 ===== -->
+<div class="rg-wrap">
+  <div class="rg-card">
+    <div class="rg-tabs" role="tablist">
+      <button class="rg-tab active" id="tabVol" type="button" role="tab" aria-selected="true">志愿者注册</button>
+      <button class="rg-tab" id="tabCom" type="button" role="tab" aria-selected="false">社区入驻申请</button>
+    </div>
+
+    <!-- 志愿者表单 -->
+    <div class="rg-body" id="formVol">
+      <form id="volForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="vName">姓名<span class="req">*</span></label>
+            <input type="text" id="vName" name="vName" placeholder="请输入真实姓名" autocomplete="name">
+            <span class="err">请填写姓名</span>
+          </div>
+          <div class="field">
+            <label for="vPhone">手机号<span class="req">*</span></label>
+            <input type="tel" id="vPhone" name="vPhone" placeholder="11 位手机号码" autocomplete="tel">
+            <span class="err">请填写正确的 11 位手机号</span>
+          </div>
+          <div class="field full">
+            <label for="vCommunity">所在社区<span class="req">*</span></label>
+            <input type="text" id="vCommunity" name="vCommunity" placeholder="如：武汉市洪山区关山街道××社区">
+            <span class="err">请填写所在社区</span>
+          </div>
+          <div class="field">
+            <label for="vTime">可服务时段<span class="req">*</span></label>
+            <select id="vTime" name="vTime">
+              <option value="">请选择</option>
+              <option>工作日白天</option>
+              <option>工作日晚间</option>
+              <option>周末白天</option>
+              <option>周末晚间</option>
+              <option>时间灵活，均可协调</option>
+            </select>
+            <span class="err">请选择可服务时段</span>
+          </div>
+          <div class="field">
+            <label for="vUrgent">紧急联系人电话</label>
+            <input type="tel" id="vUrgent" name="vUrgent" placeholder="选填，用于服务安全备查" autocomplete="tel">
+            <span class="err">请填写正确的手机号</span>
+          </div>
+          <div class="field full">
+            <label>可提供的服务（可多选）</label>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="skills" value="情感陪伴">情感陪伴</label>
+              <label class="chip"><input type="checkbox" name="skills" value="陪诊就医">陪诊就医</label>
+              <label class="chip"><input type="checkbox" name="skills" value="生活代办">生活代办</label>
+              <label class="chip"><input type="checkbox" name="skills" value="数字帮扶">数字帮扶</label>
+              <label class="chip"><input type="checkbox" name="skills" value="健康关怀">健康关怀</label>
+              <label class="chip"><input type="checkbox" name="skills" value="其他">其他</label>
+            </div>
+          </div>
+          <div class="field full">
+            <label class="agree">
+              <input type="checkbox" id="vAgree" name="vAgree">
+              <span>我已阅读并同意《志愿服务承诺》，愿意在平台实名登记、按约定提供服务，并接受服务过程留痕与双方互评。<span class="err-msg">请先阅读并勾选承诺</span></span>
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary submit-btn" type="submit">提交注册申请</button>
+      </form>
+      <div class="success" id="volSuccess">
+        <div class="ok"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14l-3-3"/></svg></div>
+        <h3>志愿者注册申请已提交</h3>
+        <p>感谢你的善意。社区工作人员将在 1-3 个工作日内完成信息核验，并通过短信与你联系。核验通过后即可开始接单陪伴。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="index.html">返回首页</a>
+          <a class="btn btn-dark" href="detail.html">了解平台详情</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 社区入驻表单 -->
+    <div class="rg-body" id="formCom" style="display:none">
+      <form id="comForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="cName">社区名称<span class="req">*</span></label>
+            <input type="text" id="cName" name="cName" placeholder="如：××街道××社区居委会">
+            <span class="err">请填写社区名称</span>
+          </div>
+          <div class="field">
+            <label for="cRegion">所在区域<span class="req">*</span></label>
+            <input type="text" id="cRegion" name="cRegion" placeholder="如：武汉市洪山区">
+            <span class="err">请填写所在区域</span>
+          </div>
+          <div class="field">
+            <label for="cContact">负责人姓名<span class="req">*</span></label>
+            <input type="text" id="cContact" name="cContact" placeholder="社区志愿工作负责人">
+            <span class="err">请填写负责人姓名</span>
+          </div>
+          <div class="field">
+            <label for="cPhone">联系电话<span class="req">*</span></label>
+            <input type="tel" id="cPhone" name="cPhone" placeholder="11 位手机号码">
+            <span class="err">请填写正确的手机号</span>
+          </div>
+          <div class="field full">
+            <label for="cRes">社区现有志愿服务基础（选填）</label>
+            <input type="text" id="cRes" name="cRes" placeholder="如：已有 30 名社区志愿者、每周定期开展助老活动">
+          </div>
+          <div class="field full">
+            <label class="agree">
+              <input type="checkbox" id="cAgree" name="cAgree">
+              <span>我代表本社区申请入驻空巢守望平台，承诺配合平台完成需求登记、服务组织与数据核验等工作。<span class="err-msg">请先阅读并勾选申请承诺</span></span>
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary submit-btn" type="submit">提交入驻申请</button>
+      </form>
+      <div class="success" id="comSuccess">
+        <div class="ok"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14l-3-3"/></svg></div>
+        <h3>社区入驻申请已提交</h3>
+        <p>平台运营团队将在 3-5 个工作日内与你联系，确认社区信息与服务组织方案。入驻完成后即可使用需求登记、排班协调与数据看板等工具。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="index.html">返回首页</a>
+          <a class="btn btn-dark" href="detail.html">了解平台详情</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 侧栏说明 ===== -->
+<div class="rg-aside">
+  <div class="item">
+    <div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div>
+    <h3>精准匹配</h3>
+    <p>注册后由平台按位置、时间与技能为你匹配最合适的陪伴需求</p>
+  </div>
+  <div class="item">
+    <div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></div>
+    <h3>信用留痕</h3>
+    <p>实名认证与服务记录全程留痕，每一次付出都被记录、被认可</p>
+  </div>
+  <div class="item">
+    <div class="ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></div>
+    <h3>赋能社区</h3>
+    <p>社区入驻后获得需求登记、排班协调与数据看板等组织工具支持</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="b">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#E8612C"/>
+        <path d="M8 20.5c2.4-5.2 5.7-7.6 8-7.6s5.6 2.4 8 7.6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="16" cy="11.5" r="2.5" fill="#fff"/>
+      </svg>
+      <span>空巢守望 · 志愿匹配系统</span>
+    </div>
+    <p>注册为演示流程，信息不会真实提交。数据来源：国家统计局（截至2025年底）、国家卫健委调查。</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var tabVol = document.getElementById("tabVol");
+  var tabCom = document.getElementById("tabCom");
+  var formVol = document.getElementById("formVol");
+  var formCom = document.getElementById("formCom");
+
+  function switchTab(which){
+    var vol = (which === "vol");
+    tabVol.classList.toggle("active", vol);
+    tabCom.classList.toggle("active", !vol);
+    tabVol.setAttribute("aria-selected", vol ? "true" : "false");
+    tabCom.setAttribute("aria-selected", vol ? "false" : "true");
+    formVol.style.display = vol ? "block" : "none";
+    formCom.style.display = vol ? "none" : "block";
+  }
+  tabVol.addEventListener("click", function(){ switchTab("vol"); });
+  tabCom.addEventListener("click", function(){ switchTab("com"); });
+
+  /* ---- 表单校验 ---- */
+  var PHONE_RE = /^1[3-9]\d{9}$/;
+  function setInvalid(field, invalid){
+    field.classList.toggle("invalid", invalid);
+  }
+  function checkText(input){
+    var valid = input.value.trim().length > 0;
+    setInvalid(input.closest(".field"), !valid);
+    return valid;
+  }
+  function checkPhone(input, required){
+    var v = input.value.trim();
+    var ok = required ? PHONE_RE.test(v) : (v === "" || PHONE_RE.test(v));
+    setInvalid(input.closest(".field"), !ok);
+    return ok;
+  }
+  function checkSelect(sel){
+    var ok = sel.value !== "";
+    setInvalid(sel.closest(".field"), !ok);
+    return ok;
+  }
+  function checkAgree(input){
+    var ok = input.checked;
+    input.closest(".agree").classList.toggle("invalid", !ok);
+    return ok;
+  }
+
+  var volForm = document.getElementById("volForm");
+  volForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    var ok = true;
+    ok = checkText(document.getElementById("vName")) && ok;
+    ok = checkPhone(document.getElementById("vPhone"), true) && ok;
+    ok = checkText(document.getElementById("vCommunity")) && ok;
+    ok = checkSelect(document.getElementById("vTime")) && ok;
+    ok = checkPhone(document.getElementById("vUrgent"), false) && ok;
+    ok = checkAgree(document.getElementById("vAgree")) && ok;
+    if (!ok) return;
+    volForm.style.display = "none";
+    document.getElementById("volSuccess").style.display = "block";
+  });
+
+  var comForm = document.getElementById("comForm");
+  comForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    var ok = true;
+    ok = checkText(document.getElementById("cName")) && ok;
+    ok = checkText(document.getElementById("cRegion")) && ok;
+    ok = checkText(document.getElementById("cContact")) && ok;
+    ok = checkPhone(document.getElementById("cPhone"), true) && ok;
+    ok = checkAgree(document.getElementById("cAgree")) && ok;
+    if (!ok) return;
+    comForm.style.display = "none";
+    document.getElementById("comSuccess").style.display = "block";
+  });
+
+  /* 输入时清除错误状态 */
+  var inputs = document.querySelectorAll("input, select");
+  for (var i = 0; i < inputs.length; i++){
+    inputs[i].addEventListener("input", function(){
+      this.closest(".field") && this.closest(".field").classList.remove("invalid");
+      var ag = this.closest(".agree");
+      if (ag && this.type === "checkbox") ag.classList.remove("invalid");
+    });
+  }
+})();
+</script>
+</body>
+</html>
